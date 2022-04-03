@@ -1,0 +1,28 @@
+version: '3'
+services:
+  api:
+    container_name: dqr-transfer
+    image: dqr-transfer
+    build: ./docker/develop/.
+    volumes:
+      - .:/app
+    ports:
+      - "3001:3000"
+    environment:
+      - PORT=3000
+      - NODE_ENV=local
+      - TZ=America/Sao_Paulo
+      - URL_DATABASE=mongodb://dqr-transfer-db:27017/dqr-transfer
+
+  dqr-transfer-db:
+    container_name: dqr-transfer-db
+    image: mongo
+    volumes:
+      - dqr-transfer-db:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+  dqr-transfer-db:
+
+
