@@ -3,6 +3,7 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { transferCollection, TransferSchema } from "./models/repository/schemas/TransferSchema";
 import { TransferController } from "./api/TranferController";
 import { TransferApp } from "./models/apps/TransferApp/TransferApp";
+import { DqrSettlementService } from "./models/service/DqrSettlementService";
 
 @Module({
     imports: [
@@ -12,7 +13,7 @@ import { TransferApp } from "./models/apps/TransferApp/TransferApp";
         ]),
     ],
     controllers: [TransferController],
-    providers: [Logger, TransferApp],
+    providers: [Logger, TransferApp, DqrSettlementService],
 })
 export class AppModule {
 }
