@@ -32,7 +32,7 @@ async function bootstrap() {
 
   const swaggerOptions = new DocumentBuilder()
       .setTitle('Transfer Server')
-      .setDescription('DQR Transfer for Bank')
+      .setDescription('DQR Bank Transfer')
       .addBearerAuth()
       .build();
 
