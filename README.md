@@ -8,7 +8,7 @@ This microservice make bank transfer and settlement
 Create a network to accommodate DQR apis
 
 ```bash
-$ docker network create valtan
+$ docker network create qrd-network
 ```
 
 Install all dependencies
