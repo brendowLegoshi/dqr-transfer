@@ -30,5 +30,3 @@ networks:
   default:
     external:
       name: qrd-network
-
-
