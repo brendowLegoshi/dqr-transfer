@@ -29,6 +29,6 @@ volumes:
 networks:
   default:
     external:
-      name: qrd-netword
+      name: qrd-network
 
 
