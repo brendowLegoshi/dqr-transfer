@@ -1,4 +1,4 @@
-FROM node:12-alpine as build
+FROM node:16-alpine as build
 WORKDIR /app
 COPY . .
 RUN set -x \
@@ -8,7 +8,7 @@ RUN set -x \
   && npm install \
   && npm run build
 
-FROM node:12-alpine
+FROM node:16-alpine
 WORKDIR /app
 COPY --from=build /app/dist ./dist
 COPY package.json .

@@ -26,3 +26,9 @@ volumes:
   dqr-transfer-db:
 
 
+networks:
+  default:
+    external:
+      name: qrd-netword
+
+
