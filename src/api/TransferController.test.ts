@@ -6,6 +6,7 @@ import { fakeTransfer, fakeTransferDto } from "../models/utils/fakes/fakeTransfe
 import { TransferController } from "./TranferController";
 import { dayAfterTomorrow, fakeLogger } from "../models/utils/fakes/constants";
 import { TransferDto } from "../models/types/dto/TransferDto";
+import { fakeCreatePaymentOrderResponse } from "../models/utils/fakes/fakePatymetOrder";
 
 describe('Transfer controller', () => {
     let expressApp: INestApplication;
@@ -13,7 +14,8 @@ describe('Transfer controller', () => {
 
     beforeEach(async () => {
         app = {
-            transfer: () => Promise.resolve(fakeTransfer)
+            transfer: () => Promise.resolve(fakeTransfer),
+            getSettlementTransfer: () => Promise.resolve(fakeCreatePaymentOrderResponse)
         } as unknown as TransferApp;
 
         const moduleFixture = await Test.createTestingModule({
@@ -36,18 +38,30 @@ describe('Transfer controller', () => {
     describe('post transfer', () => {
         it('should make a transfer', async () => {
             jest.spyOn(app, 'transfer');
+
             const expectTransferDto: TransferDto = {
                 ...fakeTransferDto,
                 expectedOn: dayAfterTomorrow
             }
 
             const agent = request(expressApp.getHttpServer());
-
-            await agent.post('')
+            await agent.post('/bankTransfer')
                 .send(expectTransferDto)
                 .expect(201);
 
             expect(app.transfer).toHaveBeenCalledWith(expectTransferDto);
         });
+    })
+
+    describe('get transfer', () => {
+        it('should get bank settlement', async () => {
+            jest.spyOn(app, 'getSettlementTransfer');
+
+            const agent = request(expressApp.getHttpServer());
+            await agent.get(`/bankSettlement/dfdesdfeasdf-dfadfdf-dfadfadf`)
+                .expect(200);
+
+            expect(app.getSettlementTransfer).toHaveBeenCalled();
+        })
     })
 })
