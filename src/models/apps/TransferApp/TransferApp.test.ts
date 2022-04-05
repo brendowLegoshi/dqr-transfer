@@ -70,7 +70,6 @@ describe('transfer app', () => {
                 amount: result.value,
                 expectedOn: result.expectedOn.toISOString().split('T')[0]
             }
-            console.log(expectPaymentOrder);
 
             expect(dqrSettlementService.paymentOrders).toHaveBeenCalledWith(expectPaymentOrder);
         });
