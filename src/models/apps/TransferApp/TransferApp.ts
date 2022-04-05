@@ -5,7 +5,7 @@ import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { TransferModel } from "../../repository/contratcts";
 import { DqrSettlementService } from "../../service/DqrSettlementService";
-import { Settlement, SettlementResponse } from "../../types/Settlement";
+import { Settlement, CreatePaymentOrderResponse, PaymentOrderResponse } from "../../types/Settlement";
 import { yesterday } from "../../utils/fakes/constants";
 
 @Injectable()
@@ -31,7 +31,14 @@ export class TransferApp {
         return transferCreated;
     }
 
-    private settlement = async (paymentOrder: Settlement): Promise<SettlementResponse> => {
+    public getSettlementTransfer = async (transferId: string): Promise<PaymentOrderResponse> => {
+        this.logger.debug('Get Settlement Transfer by settlement id has been requested', this.context);
+        this.logger.debug(transferId);
+
+        return this.dqrSettlementService.getPaymentOrders(transferId);
+    }
+
+    private settlement = async (paymentOrder: Settlement): Promise<CreatePaymentOrderResponse> => {
         this.logger.debug('Settlement has been requested', this.context);
         this.logger.debug(JSON.stringify(paymentOrder));
 
@@ -43,8 +50,7 @@ export class TransferApp {
         return {
             externalId: id,
             amount: value,
-            expectedOn
+            expectedOn: expectedOn.toISOString().split('T')[0]
         }
     }
-
 }
